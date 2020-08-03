@@ -6,7 +6,7 @@ import Main from "./components/Main";
 import Topstatus from "./components/Topstatus";
 import BottomNav from "./components/BottomNav";
 import { NativeRouter } from "react-router-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import MapView, { Marker } from "react-native-maps";
 var DOMParser = require("xmldom").DOMParser;
 
@@ -14,6 +14,8 @@ const screenWidth = Dimensions.get("window").width - 200;
 const screenHeight = Dimensions.get("window").height - 450;
 
 export default function App() {
+  const dispatch = useDispatch();
+
   const [isLoading, setIsLoading] = useState(true);
 
   const [data, setData] = useState([]);
@@ -47,7 +49,17 @@ export default function App() {
       });
     setIsLoading(false);
     setLoadCount(1);
+    navigator.geolocation.getCurrentPosition((position) => {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      dispatch({ type: "GET_POS", lat: lat, lon: lon });
+    });
   };
+
+  const { Lat, Lon } = useSelector((state) => ({
+    Lat: state.Lat,
+    Lon: state.Lon,
+  }));
 
   const OnReload = () => {
     setIsLoading(true);
@@ -91,41 +103,39 @@ export default function App() {
   }, []);
 
   if (nearStore === true) {
-    navigator.geolocation.getCurrentPosition((position) =>
-      alert(
-        "latitude : " +
-          position.coords.latitude +
-          "\n" +
-          "longitude : " +
-          position.coords.longitude
-      )
-    );
-
-    return (
-      <View style={styles.container}>
-        <StatusBar hidden />
-        <Topstatus data={data} />
-        <MapView
-          style={{ width: 400, height: 550 }}
-          initialRegion={{
-            latitude: 37.2967139,
-            longitude: 127.0085259,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-        >
-          <Marker
-            coordinate={{
-              latitude: 37.2967139,
-              longitude: 127.0085259,
+    if (Lat.length !== 0 && Lon.length !== 0) {
+      return (
+        <View style={styles.container}>
+          <StatusBar hidden />
+          <Topstatus data={data} />
+          <MapView
+            style={{ width: 400, height: 550 }}
+            initialRegion={{
+              latitude: Lat,
+              longitude: Lon,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
             }}
-            title="서준문"
-            description="서준이에오"
-          />
-        </MapView>
-        <BottomNav />
-      </View>
-    );
+          >
+            <Marker
+              coordinate={{
+                latitude: 37.2967139,
+                longitude: 127.0085259,
+              }}
+              title="서준문"
+              description="서준이에오"
+            />
+          </MapView>
+          <BottomNav />
+        </View>
+      );
+    } else {
+      return (
+        <View>
+          <Text>데이터 로딩중</Text>
+        </View>
+      );
+    }
   }
 
   return (

@@ -7,6 +7,8 @@ import { createStore } from "redux";
 const initialState = {
   search_data: {},
   nearStore: false,
+  Lat: 37.2832481,
+  Lon: 127.0185837,
 };
 
 const reducer = (state = initialState, action) => {
@@ -20,6 +22,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         nearStore: !state.nearStore,
+      };
+    case "GET_POS":
+      return {
+        ...state,
+        Lat: action.lat,
+        Lon: action.lon,
       };
     default:
       return {

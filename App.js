@@ -22,6 +22,11 @@ export default function App() {
 
   const [loadCount, setLoadCount] = useState(1);
 
+  const { Lat, Lon } = useSelector((state) => ({
+    Lat: state.Lat,
+    Lon: state.Lon,
+  }));
+
   const getData = async () => {
     await axios
       .get(
@@ -49,17 +54,26 @@ export default function App() {
       });
     setIsLoading(false);
     setLoadCount(1);
-    navigator.geolocation.getCurrentPosition((position) => {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
-      dispatch({ type: "GET_POS", lat: lat, lon: lon });
-    });
+    curPos();
   };
 
-  const { Lat, Lon } = useSelector((state) => ({
-    Lat: state.Lat,
-    Lon: state.Lon,
-  }));
+  const curPos = async () => {
+    await navigator.geolocation.getCurrentPosition((position) => {
+      const lat = String(position.coords.latitude);
+      const lon = String(position.coords.longitude);
+      const newLat = Number(lat.substr(0, 8));
+      const newLon = Number(lon.substr(0, 9));
+      dispatch({ type: "GET_POS", lat: newLat, lon: newLon });
+    });
+    await alert("Lat : " + Lat + "\n" + "Lon : " + Lon);
+    await axios
+      .get(
+        `
+      http://apis.vworld.kr/coord2new.do?x=${Lon}&y=${Lat}&output=xml&epsg=epsg:4326&apiKey=43467595-7C52-3201-BBDE-DCCB07EF58B9
+    `
+      )
+      .then((res) => alert(res));
+  };
 
   const OnReload = () => {
     setIsLoading(true);
@@ -122,8 +136,8 @@ export default function App() {
                 latitude: 37.2967139,
                 longitude: 127.0085259,
               }}
-              title="서준문"
-              description="서준이에오"
+              title="은구김"
+              description="은구에오"
             />
           </MapView>
           <BottomNav />

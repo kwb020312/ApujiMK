@@ -10,8 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import MapView, { Marker } from "react-native-maps";
 var DOMParser = require("xmldom").DOMParser;
 
-// 직압추가
-// 작업 추가 2
+// 테스트1
 
 const screenWidth = Dimensions.get("window").width - 200;
 const screenHeight = Dimensions.get("window").height - 450;

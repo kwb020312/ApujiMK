@@ -61,18 +61,18 @@ export default function App() {
     await navigator.geolocation.getCurrentPosition((position) => {
       const lat = String(position.coords.latitude);
       const lon = String(position.coords.longitude);
-      const newLat = Number(lat.substr(0, 8));
-      const newLon = Number(lon.substr(0, 9));
+      const newLat = Number(lat);
+      const newLon = Number(lon);
       dispatch({ type: "GET_POS", lat: newLat, lon: newLon });
     });
-    await alert("Lat : " + Lat + "\n" + "Lon : " + Lon);
-    await axios
-      .get(
-        `
-      http://apis.vworld.kr/coord2new.do?x=${Lon}&y=${Lat}&output=xml&epsg=epsg:4326&apiKey=43467595-7C52-3201-BBDE-DCCB07EF58B9
-    `
-      )
-      .then((res) => alert(res));
+    // alert("Lat : " + Lat + "\n" + "Lon : " + Lon);
+    // axios
+    //   .get(
+    //     `
+    //   http://apis.vworld.kr/coord2new.do?x=${Lon}&y=${Lat}&output=xml&epsg=epsg:4326&apiKey=43467595-7C52-3201-BBDE-DCCB07EF58B9
+    // `
+    //   )
+    //   .then((res) => alert(res));
   };
 
   const OnReload = () => {
@@ -114,6 +114,7 @@ export default function App() {
   }));
   useEffect(() => {
     OnReload();
+    curPos();
   }, []);
 
   if (nearStore === true) {

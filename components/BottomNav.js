@@ -13,26 +13,24 @@ export default function BottomNav() {
   }));
 
   return (
-    <>
-      <View style={styles.container}>
-        <TouchableOpacity style={styles.icon}>
-          <AntDesign name="heart" size={35} color="black" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.icon}>
-          <MaterialCommunityIcons name="bell" size={35} color="black" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => dispatch({ type: "NEARLY_STORE" })}
-          style={styles.icon}
-        >
-          <Fontisto
-            name="pills"
-            size={35}
-            color={nearStore === true ? "red" : "black"}
-          />
-        </TouchableOpacity>
-      </View>
-    </>
+    <View style={styles.container}>
+      <TouchableOpacity style={styles.icon}>
+        <AntDesign name="heart" size={35} color="black" />
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.icon}>
+        <MaterialCommunityIcons name="bell" size={35} color="black" />
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => dispatch({ type: "NEARLY_STORE" })}
+        style={styles.icon}
+      >
+        <Fontisto
+          name="pills"
+          size={35}
+          color={nearStore === true ? "green" : "black"}
+        />
+      </TouchableOpacity>
+    </View>
   );
 }
 

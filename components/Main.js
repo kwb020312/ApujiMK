@@ -13,6 +13,7 @@ import { DataTable } from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { AntDesign } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 var DOMParser = require("xmldom").DOMParser;
 
@@ -21,8 +22,15 @@ const Stack = createStackNavigator();
 const screenWidth = Dimensions.get("window").width;
 /* 필요한 데이터를 모두 불러옴 주변 약국의 위치만 찾아 표시하면 됨 */
 function Detail({ route }) {
+  const dispatch = useDispatch();
+
+  const { value } = useSelector((state) => ({
+    value: state.value,
+  }));
+
   const [datas, setDatas] = useState([]);
   const [isLoaded, setIsLoaded] = useState(true);
+  const [heart, setHeart] = useState("hearto");
   const regex = /.+(?=정|슐)[.+(?=정|슐)]/;
   const dataName = regex.exec(route.params.dataName)[0];
   // const header = /^[0-9][.]/;
@@ -75,12 +83,15 @@ function Detail({ route }) {
                 <Text style={{ fontSize: 30 }}>{dataName}</Text>
                 <TouchableOpacity
                   style={styles.icon}
-                  onPress={(AntDesign.name = "heart")}
+                  onPress={() =>
+                    heart == "heart" ? setHeart("hearto") : setHeart("heart")
+                  }
                 >
-                  <AntDesign name="hearto" size={20} color="black" />
+                  <AntDesign name={heart} size={30} color="black" />
                 </TouchableOpacity>
               </View>
             </View>
+            <Text>{value}</Text>
             {datas.length !== 0 ? (
               datas.map((data) => <Text style={styles.desc}>{data}</Text>)
             ) : (
@@ -206,5 +217,7 @@ const styles = StyleSheet.create({
   desc: {
     fontSize: 15,
   },
-  icon: {},
+  icon: {
+    marginLeft: 180,
+  },
 });

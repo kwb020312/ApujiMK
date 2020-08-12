@@ -10,11 +10,6 @@ import { useSelector, useDispatch } from "react-redux";
 import MapView, { Marker } from "react-native-maps";
 var DOMParser = require("xmldom").DOMParser;
 
-// 테스트1
-// 테스트1
-// 테스트1
-// 테스트1
-
 const screenWidth = Dimensions.get("window").width - 200;
 const screenHeight = Dimensions.get("window").height - 450;
 
@@ -70,14 +65,13 @@ export default function App() {
       const newLon = Number(lon.substr(0, 9));
       dispatch({ type: "GET_POS", lat: newLat, lon: newLon });
     });
-    await alert("Lat : " + Lat + "\n" + "Lon : " + Lon);
-    await axios
-      .get(
-        `
+    // await alert("Lat : " + Lat + "\n" + "Lon : " + Lon);
+    await axios.get(
+      `
       http://apis.vworld.kr/coord2new.do?x=${Lon}&y=${Lat}&output=xml&epsg=epsg:4326&apiKey=43467595-7C52-3201-BBDE-DCCB07EF58B9
     `
-      )
-      .then((res) => alert(res));
+    );
+    // .then((res) => alert(res));
   };
 
   const OnReload = () => {
@@ -128,7 +122,7 @@ export default function App() {
           <StatusBar hidden />
           <Topstatus data={data} />
           <MapView
-            style={{ width: 400, height: 550 }}
+            style={{ width: 400, height: 560 }}
             initialRegion={{
               latitude: Lat,
               longitude: Lon,
@@ -141,8 +135,8 @@ export default function App() {
                 latitude: 37.2967139,
                 longitude: 127.0085259,
               }}
-              title="은구김"
-              description="은구에오"
+              title="테스트"
+              description="테스트입니다"
             />
           </MapView>
           <BottomNav />

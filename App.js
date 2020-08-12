@@ -56,7 +56,7 @@ export default function App() {
     setLoadCount(1);
     curPos();
   };
-
+  //
   const curPos = async () => {
     await navigator.geolocation.getCurrentPosition((position) => {
       const lat = String(position.coords.latitude);

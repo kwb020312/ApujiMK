@@ -10,6 +10,8 @@ import { useSelector, useDispatch } from "react-redux";
 import MapView, { Marker } from "react-native-maps";
 var DOMParser = require("xmldom").DOMParser;
 
+// 브랜치 되는지 테스트 할 거예요.
+
 const screenWidth = Dimensions.get("window").width - 200;
 const screenHeight = Dimensions.get("window").height - 450;
 
@@ -169,26 +171,26 @@ export default function App() {
           <BottomNav />
         </View>
       ) : (
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Image
+          <View
             style={{
-              width: screenWidth,
-              height: screenHeight,
-              resizeMode: "stretch",
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
             }}
-            source={{
-              uri:
-                "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F95zWg%2FbtqF9DYyRQC%2FhTPekyG8tGRVzNwfnRdoc1%2Fimg.png",
-            }}
-          ></Image>
-        </View>
-      )}
+          >
+            <Image
+              style={{
+                width: screenWidth,
+                height: screenHeight,
+                resizeMode: "stretch",
+              }}
+              source={{
+                uri:
+                  "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F95zWg%2FbtqF9DYyRQC%2FhTPekyG8tGRVzNwfnRdoc1%2Fimg.png",
+              }}
+            ></Image>
+          </View>
+        )}
     </NativeRouter>
   );
 }

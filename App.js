@@ -75,6 +75,8 @@ export default function App() {
     //   .then((res) => alert(res));
   };
 
+  // 분기테스트 kali
+
   const OnReload = () => {
     setIsLoading(true);
     getData();
